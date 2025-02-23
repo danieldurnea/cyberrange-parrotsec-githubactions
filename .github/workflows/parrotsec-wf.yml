@@ -24,6 +24,6 @@ jobs:
         sudo apt-get install -y neofetch && neofetch   
     - name: "docker build parrotsec compose"
       run: |
-        sudo mkdir /mnt/share-kali
-        sudo docker-compose --file dockerfiles/parrotsec/docker-compose-parrotsec.yml up -d
-        sudo docker-compose --file dockerfiles/parrotsec/docker-compose-parrotsec.yml ps
+        mkdir /mnt/share-kali
+       docker-compose --file dockerfiles/parrotsec/docker-compose-parrotsec.yml up -d
+       docker-compose --file dockerfiles/parrotsec/docker-compose-parrotsec.yml ps

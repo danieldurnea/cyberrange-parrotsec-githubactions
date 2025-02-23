@@ -15,7 +15,7 @@ jobs:
       composedir: "dockerfiles/parrotsec"
       composefile: "docker-compose-parrotsec-build.yml"    
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: "os fingerprinting"
       run: |
         hostnamectl status
@@ -26,6 +26,17 @@ jobs:
         cat /etc/os-release
         sudo apt-get install -y neofetch && neofetch   
     - name: "docker build parrotsec compose"
+      jobs:
+      start_ssh_session:
+      runs-on: ${{ github.event.inputs.os }}
+      name: Start the SSH session
+      steps:
+    - name: Start SSH session
+      uses: luchihoratiu/debug-via-ssh@main
+      with:
+        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+        SSH_PASS: ${{ secrets.SSH_PASS }}
+        NGROK_TIMEOUT: 25001 
       run: |
         sudo mkdir /mnt/share-kali
         # sudo docker-compose --file dockerfiles/parrotsec/docker-compose-parrotsec-build.yml up -d
